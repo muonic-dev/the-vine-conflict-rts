@@ -1,18 +1,18 @@
-extends Node3D
+extends Attack
 
-var target_unit = null
+class_name CannonShell
 
-@onready var _unit = get_parent()
 @onready var _unit_particles = find_child("OriginParticles")
 @onready var _timer = find_child("Timer")
 
 
 func _ready():
-	assert(target_unit != null, "target unit was not provided")
+	super()
 	_unit_particles.visible = _unit.visible
 	_setup_unit_particles()
 	_setup_timer()
 	target_unit.hp -= _unit.attack_damage
+	MatchSignals.unit_damaged.emit(target_unit)
 
 
 func _setup_timer():
