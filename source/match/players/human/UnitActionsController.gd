@@ -39,10 +39,10 @@ func _try_navigating_selected_units_towards_position(target_point):
 				and Actions.Moving.is_applicable(unit)
 			)
 	)
-	var new_unit_targets = Utils.Match.Unit.Movement.crowd_moved_to_new_pivot(
+	var new_unit_targets = Utils.Match.Movement.crowd_moved_to_new_pivot(
 		terrain_units_to_move, target_point
 	)
-	new_unit_targets += Utils.Match.Unit.Movement.crowd_moved_to_new_pivot(
+	new_unit_targets += Utils.Match.Movement.crowd_moved_to_new_pivot(
 		air_units_to_move, target_point
 	)
 	for tuple in new_unit_targets:

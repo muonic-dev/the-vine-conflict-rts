@@ -13,6 +13,10 @@ signal changed
 @export var color = Color.WHITE
 
 var _color_material = null
+var id: int
+
+func _ready():
+	id = PlayerManager.add_player()
 
 
 func add_resources(resources):

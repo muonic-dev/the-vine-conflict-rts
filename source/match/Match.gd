@@ -27,6 +27,9 @@ var visible_players = null:
 @onready var _players = $Players
 @onready var _terrain = $Terrain
 
+# required for replays
+var tick := 0
+const TICK_RATE := 10  # RTS logic ticks per second
 
 func _enter_tree():
 	assert(settings != null, "match cannot start without settings, see examples in tests/manual/")
@@ -43,6 +46,41 @@ func _ready():
 	if settings.visibility == settings.Visibility.FULL:
 		fog_of_war.reveal()
 	MatchSignals.match_started.emit()
+
+	# required for replays
+	var timer := Timer.new()
+	timer.wait_time = 1.0 / TICK_RATE
+	timer.autostart = true
+	timer.timeout.connect(_on_tick)
+	add_child(timer)
+
+	ReplayRecorder.start_recording(map, 0, settings)
+
+# required for replays
+func _on_tick():
+	tick += 1
+	_process_commands_for_tick(tick)
+
+# required for replays
+func _process_commands_for_tick(local_tick: int):
+	print(local_tick)
+	if not CommandBus.commands.has(tick):
+		return
+
+	for cmd in CommandBus.commands[tick]:
+		_execute_command(cmd)
+
+func _execute_command(cmd: Dictionary):
+	match cmd.type:
+		"move":
+			for id in cmd.units:
+				UnitRegistry.get(id).move_to(cmd.target)
+
+		"build":
+			PlayerManager.get(cmd.player).build(
+				cmd.building,
+				cmd.position
+			)
 
 
 func _unhandled_input(event):
@@ -183,7 +221,7 @@ func _move_camera_to_player_units_crowd_pivot(player):
 		func(unit): return unit.player == player
 	)
 	assert(not player_units.is_empty(), "player must have at least one initial unit")
-	var crowd_pivot = Utils.Match.Unit.Movement.calculate_aabb_crowd_pivot_yless(player_units)
+	var crowd_pivot = Utils.Match.Movement.calculate_aabb_crowd_pivot_yless(player_units)
 	_camera.set_position_safely(crowd_pivot)
 
 

@@ -1,5 +1,7 @@
 extends Area3D
 
+class_name Unit
+
 signal selected
 signal deselected
 signal hp_changed
@@ -38,6 +40,8 @@ var global_position_yless:
 var type:
 	get = _get_type
 
+var id: int
+
 var _action_locked = false
 
 @onready var _match = find_parent("Match")
@@ -49,6 +53,7 @@ func _ready():
 	_setup_color()
 	_setup_default_properties_from_constants()
 	assert(_safety_checks())
+	id = UnitRegistry.register(self)
 
 
 func is_revealing():
@@ -58,9 +63,8 @@ func is_revealing():
 func _set_hp(value):
 	var old_hp = hp
 	hp = max(0, value)
-	# if old_hp != null and hp < old_hp:
-	# 	MatchSignals.unit_damaged.emit(self)
-	hp_changed.emit()
+	if hp != old_hp:
+		hp_changed.emit()
 	if hp == 0:
 		_handle_unit_death()
 
