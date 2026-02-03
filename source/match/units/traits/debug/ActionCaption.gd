@@ -14,7 +14,9 @@ func _on_action_changed(new_action):
 		text = ""
 	else:
 		text = str(new_action)
+	print('action_changed: ', new_action)
 
 
 func _on_action_updated():
 	text = str(_unit.action)
+	print('action_updated: ', _unit.action)

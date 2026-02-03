@@ -1,6 +1,5 @@
 extends Node3D
 
-const Unit = preload("res://source/match/units/Unit.gd")
 const Structure = preload("res://source/match/units/Structure.gd")
 const Player = preload("res://source/match/players/Player.gd")
 const Human = preload("res://source/match/players/human/Human.gd")
@@ -29,7 +28,7 @@ var visible_players = null:
 
 # required for replays
 var tick := 0
-const TICK_RATE := 10  # RTS logic ticks per second
+const TICK_RATE := 10 # RTS logic ticks per second
 
 func _enter_tree():
 	assert(settings != null, "match cannot start without settings, see examples in tests/manual/")
@@ -54,7 +53,7 @@ func _ready():
 	timer.timeout.connect(_on_tick)
 	add_child(timer)
 
-	ReplayRecorder.start_recording(map, 0, settings)
+	ReplayRecorder.start_recording(map.name, 0, settings)
 
 # required for replays
 func _on_tick():
@@ -63,8 +62,7 @@ func _on_tick():
 
 # required for replays
 func _process_commands_for_tick(local_tick: int):
-	print(local_tick)
-	if not CommandBus.commands.has(tick):
+	if not CommandBus.commands.has(local_tick):
 		return
 
 	for cmd in CommandBus.commands[tick]:

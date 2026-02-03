@@ -5,7 +5,7 @@ var target_unit = null:
 		if target_unit == null and a_target_unit != null:
 			a_target_unit.tree_exited.connect(_on_target_unit_tree_exited)
 			hide()
-		elif target_unit != null and a_target_unit == null:
+		elif target_unit != null and a_target_unit == null and _on_target_unit_tree_exited != null:
 			target_unit.tree_exited.disconnect(_on_target_unit_tree_exited)
 			_reset_position_to_parent()
 			if _unit.is_in_group("selected_units"):

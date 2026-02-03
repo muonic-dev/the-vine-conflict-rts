@@ -34,6 +34,7 @@ CommandBus="*uid://cjotsmgtrp3go"
 ReplayRecorder="*uid://shseie6vv1ne"
 UnitRegistry="*uid://ih1cm60v3gld"
 PlayerManager="*uid://cth0tryaiulye"
+GameData="*uid://ufpaci6ywatp"
 
 [debug]
 
