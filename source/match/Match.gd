@@ -61,11 +61,11 @@ func _ready():
 # required for replays
 func _on_tick():
 	tick += 1
-	_process_commands_for_tick(tick)
+	_process_commands_for_tick()
 
 # required for replays
-func _process_commands_for_tick(local_tick: int):
-	if not CommandBus.commands.has(local_tick):
+func _process_commands_for_tick():
+	if not CommandBus.commands.has(tick):
 		return
 
 	for cmd in CommandBus.commands[tick]:
@@ -76,7 +76,6 @@ func _execute_command(cmd: Dictionary):
 		Enums.CommandType.MOVE:
 			for entry in cmd.data.targets:
 				var unit: Unit = EntityRegistry.get_unit(entry.unit)
-				print(unit)
 				if unit == null:
 					continue
 				unit.action = Actions.Moving.new(entry.pos)
