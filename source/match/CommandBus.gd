@@ -7,6 +7,7 @@ func push_command(cmd: Dictionary):
 	if not commands.has(t):
 		commands[t] = []
 	commands[t].append(cmd)
+	ReplayRecorder.record_command(cmd)
 
 func get_commands_for_tick(tick: int) -> Array:
 	if ReplayRecorder.mode == ReplayRecorder.Mode.PLAY:

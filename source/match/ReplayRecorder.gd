@@ -1,12 +1,17 @@
 extends Node
 
-enum Mode { OFF, RECORD, PLAY }
+enum Mode {OFF, RECORD, PLAY}
 
 @export var mode: Mode = Mode.OFF
 @export var replay := {
 	"meta": {},
 	"commands": []
 }
+
+func _ready():
+	MatchSignals.connect("match_finished_with_defeat", _on_match_ended)
+	MatchSignals.connect("match_finished_with_victory", _on_match_ended)
+	MatchSignals.connect("match_aborted", _on_match_ended)
 
 func start_recording(map_name: String, _seed: int, settings):
 	mode = Mode.RECORD
@@ -33,7 +38,10 @@ func record_command(cmd: Dictionary):
 func stop_recording():
 	mode = Mode.OFF
 
-func save_to_file(path: String):
+## replay_2026-02-05T19-00-22.save
+func save_to_file():
+	var path = get_replay_path()
+
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(JSON.stringify(replay))
 	file.close()
@@ -45,3 +53,11 @@ func load_from_file(path: String):
 
 func start_replay():
 	mode = Mode.PLAY
+
+func get_replay_path():
+	var timestamp = Time.get_datetime_string_from_system().replace(":", "-") # Replace : with - for valid filename
+	return "user://replay_" + timestamp + ".save"
+
+func _on_match_ended():
+	stop_recording()
+	save_to_file()
