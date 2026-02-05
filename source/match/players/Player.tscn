@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bj8c6tdt6o1yt"]
+[gd_scene format=3 uid="uid://bj8c6tdt6o1yt"]
 
-[ext_resource type="Script" path="res://source/match/players/Player.gd" id="1_po52i"]
+[ext_resource type="Script" uid="uid://r37kkv0ef84t" path="res://source/match/players/Player.gd" id="1_po52i"]
 
-[node name="Player" type="Node3D" groups=["players"]]
+[node name="Player" type="Node3D" unique_id=1900526527 groups=["players"]]
 script = ExtResource("1_po52i")

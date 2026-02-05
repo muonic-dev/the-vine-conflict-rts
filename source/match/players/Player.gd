@@ -1,5 +1,7 @@
 extends Node3D
 
+class_name Player
+
 signal changed
 
 @export var resource_a = 0:

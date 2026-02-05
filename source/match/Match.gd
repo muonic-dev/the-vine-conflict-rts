@@ -73,9 +73,9 @@ func _process_commands_for_tick(local_tick: int):
 
 func _execute_command(cmd: Dictionary):
 	match cmd.type:
-		CommandType.MOVE:
+		Enums.CommandType.MOVE:
 			for entry in cmd.data.targets:
-				var unit: Unit = EntityRegistry.get(entry.unit)
+				var unit: Unit = EntityRegistry.get_unit(entry.unit)
 				print(unit)
 				if unit == null:
 					continue

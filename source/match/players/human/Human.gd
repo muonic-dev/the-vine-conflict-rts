@@ -1,1 +1,3 @@
-extends "res://source/match/players/Player.gd"
+extends Player
+
+class_name HumanPlayer

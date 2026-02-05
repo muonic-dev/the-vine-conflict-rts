@@ -39,7 +39,7 @@ func _create_match_settings():
 		if player_controller != Constants.PlayerType.NONE:
 			var player_settings = PlayerSettings.new()
 			player_settings.controller = player_controller
-			player_settings.color = Constants.Player.COLORS[option_node_id]
+			player_settings.color = Constants.COLORS[option_node_id]
 			player_settings.spawn_index_offset = spawn_index_offset
 			match_settings.players.append(player_settings)
 			spawn_index_offset = 0

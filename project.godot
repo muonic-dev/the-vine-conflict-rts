@@ -32,7 +32,6 @@ Utils="*res://source/Utils.gd"
 CommandBus="*uid://cjotsmgtrp3go"
 ReplayRecorder="*uid://shseie6vv1ne"
 EntityRegistry="*uid://ih1cm60v3gld"
-PlayerManager="*uid://cth0tryaiulye"
 GameData="*uid://ufpaci6ywatp"
 CommandType="*uid://fjmnrbmh4ujk"
 

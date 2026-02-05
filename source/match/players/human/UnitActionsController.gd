@@ -42,8 +42,7 @@ func _try_navigating_selected_units_towards_position(target_point):
 
 	var cmd := {
 		"tick": Match.tick + 1,
-		"player": PlayerManager.local_player_id,
-		"type": CommandType.MOVE,
+		"type": Enums.CommandType.MOVE,
 		"data": {
 			"targets": new_unit_targets.map(
 				func(t): return {"unit": t[0].id, "pos": t[1]}

@@ -14,31 +14,29 @@ const CONTROLLER_SCENES = {
 	preload("res://source/match/players/simple-clairvoyant-ai/SimpleClairvoyantAI.tscn"),
 }
 
-
-class Player:
-	const COLORS = [
-		Color("66b1ff"),
-		Color("ff5c73"),
-		Color("a5ff99"),
-		Color("ed85ff"),
-		Color("006400"),
-		Color("bdb76b"),
-		Color("000080"),
-		Color("48d1cc"),
-		# TODO: make sure the colors below are visually distinct from the ones above
-		Color("ff0000"),
-		Color("ffa500"),
-		Color("ffff00"),
-		Color("00ff00"),
-		Color("00fa9a"),
-		Color("0000ff"),
-		Color("da70d6"),
-		Color("d8bfd8"),
-		Color("ff00ff"),
-		Color("1e90ff"),
-		Color("fa8072"),
-		Color("2f4f4f"),
-	]
+const COLORS = [
+	Color("66b1ff"),
+	Color("ff5c73"),
+	Color("a5ff99"),
+	Color("ed85ff"),
+	Color("006400"),
+	Color("bdb76b"),
+	Color("000080"),
+	Color("48d1cc"),
+	# TODO: make sure the colors below are visually distinct from the ones above
+	Color("ff0000"),
+	Color("ffa500"),
+	Color("ffff00"),
+	Color("00ff00"),
+	Color("00fa9a"),
+	Color("0000ff"),
+	Color("da70d6"),
+	Color("d8bfd8"),
+	Color("ff00ff"),
+	Color("1e90ff"),
+	Color("fa8072"),
+	Color("2f4f4f"),
+]
 
 static func get_options_file_path() -> String:
 	return (
