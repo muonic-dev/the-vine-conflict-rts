@@ -1,4 +1,6 @@
-enum { VALID, COLLIDES_WITH_AGENT, NOT_NAVIGABLE }
+class_name UnitPlacementUtils
+
+enum {VALID, COLLIDES_WITH_AGENT, NOT_NAVIGABLE}
 
 
 static func find_valid_position_radially(

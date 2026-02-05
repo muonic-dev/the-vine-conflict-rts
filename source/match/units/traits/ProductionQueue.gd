@@ -86,10 +86,7 @@ func _remove_element(element):
 func _finalize_production(former_queue_element):
 	var produced_unit = former_queue_element.unit_prototype.instantiate()
 	var placement_position = (
-		Utils
-		.Match
-		.Placement
-		.find_valid_position_radially_yet_skip_starting_radius(
+		UnitPlacementUtils.find_valid_position_radially_yet_skip_starting_radius(
 			_unit.global_position,
 			_unit.radius,
 			produced_unit.radius,
