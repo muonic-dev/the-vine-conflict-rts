@@ -3,7 +3,6 @@ extends Node3D
 class_name Match
 
 const Structure = preload("res://source/match/units/Structure.gd")
-const Player = preload("res://source/match/players/Player.gd")
 const Human = preload("res://source/match/players/human/Human.gd")
 
 const CommandCenter = preload("res://source/match/units/CommandCenter.tscn")
@@ -45,18 +44,20 @@ func _ready():
 	_setup_player_units()
 	visible_player = get_tree().get_nodes_in_group("players")[settings.visible_player]
 	_move_camera_to_initial_position()
-	if settings.visibility == settings.Visibility.FULL:
-		fog_of_war.reveal()
-	MatchSignals.match_started.emit()
-
+	
 	# required for replays
 	var timer := Timer.new()
 	timer.wait_time = 1.0 / TICK_RATE
 	timer.autostart = true
 	timer.timeout.connect(_on_tick)
 	add_child(timer)
+	
+	if settings.visibility == settings.Visibility.FULL:
+		fog_of_war.reveal()
+	MatchSignals.match_started.emit()
 
-	ReplayRecorder.start_recording(map.name, 0, settings)
+	if ReplayRecorder.mode == ReplayRecorder.Mode.OFF:
+		ReplayRecorder.start_recording(map.name, 0, settings)
 
 # required for replays
 func _on_tick():

@@ -3,10 +3,7 @@ extends Node
 enum Mode {OFF, RECORD, PLAY}
 
 @export var mode: Mode = Mode.OFF
-@export var replay := {
-	"meta": {},
-	"commands": []
-}
+@export var replay := ReplayResource.new()
 
 func _ready():
 	MatchSignals.connect("match_finished_with_defeat", _on_match_ended)
@@ -15,12 +12,8 @@ func _ready():
 
 func start_recording(map_name: String, _seed: int, settings):
 	mode = Mode.RECORD
-	replay.meta = {
-		"map": map_name,
-		"seed": _seed,
-		"settings": settings,
-	}
 	replay.commands.clear()
+	print('start_recording')
 
 ## Example command
 ## {
@@ -36,6 +29,7 @@ func record_command(cmd: Dictionary):
 	replay.commands.append(cmd.duplicate())
 
 func stop_recording():
+	print('stop_recording')
 	mode = Mode.OFF
 
 ## replay_2026-02-05T19-00-22.save
@@ -51,24 +45,20 @@ func save_to_file():
 			return
 
 	# Save the file
-	var file := FileAccess.open(path, FileAccess.WRITE)
-	if file == null:
-		printerr("Failed to open file for writing: ", path)
-		return
-	file.store_string(JSON.stringify(replay))
-	file.close()
+	var err = ResourceSaver.save(replay, path)
+	if err != OK:
+		printerr("Replay save failed:", err)
 
 func load_from_file(path: String):
-	var file := FileAccess.open(path, FileAccess.READ)
-	replay = JSON.parse_string(file.get_as_text())
-	file.close()
+	replay = ResourceLoader.load(path) as ReplayResource
+	print("Loaded replay:", replay)
 
 func start_replay():
 	mode = Mode.PLAY
 
 func get_replay_path():
 	var timestamp = Time.get_datetime_string_from_system().replace(":", "-") # Replace : with - for valid filename
-	return "user://replays/replay_" + timestamp + ".save"
+	return "user://replays/replay_" + timestamp + ".tres"
 
 func _on_match_ended():
 	stop_recording()

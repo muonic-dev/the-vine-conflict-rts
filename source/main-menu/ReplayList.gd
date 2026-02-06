@@ -29,9 +29,7 @@ func _ready():
 		print("Error: Could not open directory.")
 
 func _on_watch_replay(path: String):
-	print("Load replay:", path)
-
 	ReplayRecorder.load_from_file(path)
 	ReplayRecorder.start_replay()
 
-	get_tree().change_scene_to_file("res://match/Match.tscn")
+	get_tree().change_scene_to_file("res://source/match/Match.tscn")
