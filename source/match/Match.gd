@@ -57,7 +57,7 @@ func _ready():
 	MatchSignals.match_started.emit()
 
 	if ReplayRecorder.mode == ReplayRecorder.Mode.OFF:
-		ReplayRecorder.start_recording(map.name, 0, settings)
+		ReplayRecorder.start_recording(self )
 
 # required for replays
 func _on_tick():

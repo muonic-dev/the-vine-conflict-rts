@@ -10,10 +10,13 @@ func _ready():
 	MatchSignals.connect("match_finished_with_victory", _on_match_ended)
 	MatchSignals.connect("match_aborted", _on_match_ended)
 
-func start_recording(map_name: String, _seed: int, settings):
+func start_recording(match: Match):
 	mode = Mode.RECORD
+	replay.tick_rate = match.TICK_RATE
+	replay.settings = match.settings
+	replay.map = match.map.scene_file_path
+	#replay.seed = match.seed
 	replay.commands.clear()
-	print('start_recording')
 
 ## Example command
 ## {
@@ -49,9 +52,11 @@ func save_to_file():
 	if err != OK:
 		printerr("Replay save failed:", err)
 
-func load_from_file(path: String):
+func load_from_file(path: String) -> ReplayResource:
 	replay = ResourceLoader.load(path) as ReplayResource
 	print("Loaded replay:", replay)
+
+	return replay
 
 func start_replay():
 	mode = Mode.PLAY
