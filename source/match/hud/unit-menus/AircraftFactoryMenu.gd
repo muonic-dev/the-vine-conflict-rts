@@ -1,4 +1,4 @@
-extends GridContainer
+extends GridHotkeys
 
 const HelicopterUnit = preload("res://source/match/units/Helicopter.tscn")
 const DroneUnit = preload("res://source/match/units/Drone.tscn")
@@ -10,6 +10,7 @@ var unit = null
 
 
 func _ready():
+	super._ready()
 	var helicopter_properties = UnitConstants.DEFAULT_PROPERTIES[
 		HelicopterUnit.resource_path
 	]

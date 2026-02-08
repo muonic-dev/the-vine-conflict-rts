@@ -1,4 +1,4 @@
-extends GridContainer
+extends GridHotkeys
 
 const TankUnit = preload("res://source/match/units/Tank.tscn")
 
@@ -8,6 +8,7 @@ var unit = null
 
 
 func _ready():
+	super._ready()
 	var tank_properties = UnitConstants.DEFAULT_PROPERTIES[TankUnit.resource_path]
 	_tank_button.tooltip_text = ("{0} - {1}\n{2} HP, {3} DPS\n{4}: {5}, {6}: {7}".format(
 		[

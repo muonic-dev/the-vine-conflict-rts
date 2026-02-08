@@ -1,4 +1,4 @@
-extends GridContainer
+extends GridHotkeys
 
 const CommandCenterUnit = preload("res://source/match/units/CommandCenter.tscn")
 const VehicleFactoryUnit = preload("res://source/match/units/VehicleFactory.tscn")
@@ -14,6 +14,7 @@ const AntiAirTurretUnit = preload("res://source/match/units/AntiAirTurret.tscn")
 
 
 func _ready():
+	super._ready()
 	var ag_turret_properties = UnitConstants.DEFAULT_PROPERTIES[
 		AntiGroundTurretUnit.resource_path
 	]

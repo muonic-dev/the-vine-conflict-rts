@@ -11,13 +11,11 @@ const Worker = preload("res://source/match/units/Worker.gd")
 @onready var _aircraft_factory_menu = find_child("AircraftFactoryMenu")
 @onready var _worker_menu = find_child("WorkerMenu")
 
-
 func _ready():
 	_reset_menus()
 	MatchSignals.unit_selected.connect(func(_unit): _reset_menus())
 	MatchSignals.unit_deselected.connect(func(_unit): _reset_menus())
 	MatchSignals.unit_died.connect(func(_unit): _reset_menus())
-
 
 func _reset_menus():
 	_hide_all_menus()
@@ -26,14 +24,12 @@ func _reset_menus():
 	else:
 		hide()
 
-
 func _hide_all_menus():
 	_generic_menu.hide()
 	_command_center_menu.hide()
 	_vehicle_factory_menu.hide()
 	_aircraft_factory_menu.hide()
 	_worker_menu.hide()
-
 
 func _try_showing_any_menu():
 	var selected_controlled_units = get_tree().get_nodes_in_group("selected_units").filter(
