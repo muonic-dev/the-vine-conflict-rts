@@ -19,3 +19,9 @@ func _on_quit_button_pressed():
 
 func _on_replay_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://source/main-menu/Replays.tscn")
+	
+func _on_campaign_button_pressed() -> void:
+	print("TODO")
+	
+func _on_Load_button_pressed() -> void:
+	print("TODO")

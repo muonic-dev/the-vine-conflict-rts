@@ -27,3 +27,12 @@ func _on_exit_button_pressed():
 	await get_tree().create_timer(1.74).timeout # Give voice narrator some time to finish.
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://source/main-menu/Main.tscn")
+	
+func _on_load_button_pressed():
+	print("TODO")
+	
+func _on_save_button_pressed():
+	print("TODO")
+	
+func _on_restart_button_pressed():
+	print("TODO")

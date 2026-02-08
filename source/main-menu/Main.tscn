@@ -48,6 +48,15 @@ alignment = 1
 layout_mode = 2
 text = "Play"
 
+[node name="CampaignButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1118820947]
+layout_mode = 2
+text = "Campaign
+"
+
+[node name="LoadButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=785095041]
+layout_mode = 2
+text = "Load"
+
 [node name="ReplayButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1256572013]
 layout_mode = 2
 text = "Replays"

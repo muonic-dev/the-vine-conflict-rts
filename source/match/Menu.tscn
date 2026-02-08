@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://1rby73ckmk7b"]
+[gd_scene format=3 uid="uid://1rby73ckmk7b"]
 
-[ext_resource type="Script" path="res://source/match/Menu.gd" id="1_f256e"]
-[ext_resource type="Shader" path="res://source/shaders/2d/blurr.gdshader" id="1_mukhw"]
+[ext_resource type="Script" uid="uid://dnfne73ohfqkg" path="res://source/match/Menu.gd" id="1_f256e"]
+[ext_resource type="Shader" uid="uid://c4hdqt5bbe6oh" path="res://source/shaders/2d/blurr.gdshader" id="1_mukhw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2eh7x"]
 shader = ExtResource("1_mukhw")
@@ -9,11 +9,11 @@ shader_parameter/blurr_factor = 2.0
 shader_parameter/remove_alpha = true
 shader_parameter/overlay = true
 
-[node name="Menu" type="CanvasLayer"]
+[node name="Menu" type="CanvasLayer" unique_id=321458211]
 process_mode = 3
 script = ExtResource("1_f256e")
 
-[node name="BlurredBackground" type="ColorRect" parent="."]
+[node name="BlurredBackground" type="ColorRect" parent="." unique_id=774318084]
 material = SubResource("ShaderMaterial_2eh7x")
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +21,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=407632273]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -29,27 +29,39 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=79404585]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer" unique_id=88993433]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=2007327522]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ResumeButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1774179316]
 layout_mode = 2
 focus_mode = 0
 text = "Resume"
 
-[node name="ExitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="LoadButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=664268419]
+layout_mode = 2
+text = "Load"
+
+[node name="SaveButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=662634258]
+layout_mode = 2
+text = "Save"
+
+[node name="RestartButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1797824459]
+layout_mode = 2
+text = "Restart"
+
+[node name="ExitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=70838531]
 layout_mode = 2
 focus_mode = 0
 text = "Exit"
