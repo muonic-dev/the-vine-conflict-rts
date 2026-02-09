@@ -25,4 +25,7 @@ func _ready():
 
 
 func _on_produce_tank_button_pressed():
-	unit.production_queue.produce(TankUnit)
+	ProductionQueue._generate_unit_production_command(
+		unit.id,
+		TankUnit.resource_path,
+	)

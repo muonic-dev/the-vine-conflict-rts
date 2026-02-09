@@ -117,6 +117,39 @@ func _execute_command(cmd: Dictionary):
 				if unit == null:
 					continue
 				unit.action = Actions.Constructing.new(cmd.data.structure)
+		Enums.CommandType.ENTITY_IS_QUEUED:
+			var structure = EntityRegistry.get_unit(cmd.data.entity_id)
+			print('structure for production command: ', structure, cmd.data.entity_id)
+			if structure == null:
+				return
+			# Load the unit prototype and queue it for production
+			var unit_prototype = load(cmd.data.unit_type)
+			if unit_prototype != null and structure.has_node("ProductionQueue"):
+				structure.production_queue.produce(unit_prototype)
+		Enums.CommandType.STRUCTURE_PLACED:
+			var player = null
+			for p in get_tree().get_nodes_in_group("players"):
+				if p.id == cmd.data.player_id:
+					player = p
+					break
+			if player == null:
+				return
+			MatchSignals.setup_and_spawn_unit.emit(
+				cmd.data.structure_prototype.instantiate(),
+				cmd.data.transform,
+				player
+			)
+		Enums.CommandType.ENTITY_PRODUCTION_CANCELED:
+			var structure = EntityRegistry.get_unit(cmd.data.entity_id)
+			if structure == null:
+				return
+			# Find and cancel the queued element by unit type
+			var unit_prototype = load(cmd.data.unit_type)
+			if unit_prototype != null and structure.has_node("ProductionQueue"):
+				for element in structure.production_queue.get_elements():
+					if element.unit_prototype.resource_path == cmd.data.unit_type:
+						structure.production_queue.cancel(element)
+						break
 		_:
 			print('Cannot execute command: ', cmd)
 

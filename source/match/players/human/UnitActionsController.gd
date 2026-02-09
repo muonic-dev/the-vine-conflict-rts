@@ -126,7 +126,7 @@ func _navigate_unit_towards_unit(unit, target_unit):
 				"selected_constructors": [unit.id],
 				"structure": target_unit,
 				"rotation": target_unit.global_rotation,
-				"position": structure.global_transform.origin,
+				"position": target_unit.global_transform.origin,
 			}
 		})
 		return true

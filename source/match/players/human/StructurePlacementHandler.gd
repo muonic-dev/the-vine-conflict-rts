@@ -200,11 +200,15 @@ func _finish_structure_placement():
 			_pending_structure_prototype.resource_path
 		]
 		_player.subtract_resources(construction_cost)
-		MatchSignals.setup_and_spawn_unit.emit(
-			_pending_structure_prototype.instantiate(),
-			_active_blueprint_node.global_transform,
-			_player
-		)
+		CommandBus.push_command({
+			"tick": Match.tick + 1,
+			"type": Enums.CommandType.STRUCTURE_PLACED,
+			"data": {
+				"structure_prototype": _pending_structure_prototype,
+				"transform": _active_blueprint_node.global_transform,
+				"player_id": _player.id,
+			}
+		})
 	_cancel_structure_placement()
 
 

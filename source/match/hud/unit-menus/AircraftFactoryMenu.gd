@@ -40,8 +40,14 @@ func _ready():
 
 
 func _on_produce_helicopter_button_pressed():
-	unit.production_queue.produce(HelicopterUnit)
+	ProductionQueue._generate_unit_production_command(
+		unit.id,
+		DroneUnit.resource_path,
+	)
 
 
 func _on_produce_drone_button_pressed():
-	unit.production_queue.produce(DroneUnit)
+	ProductionQueue._generate_unit_production_command(
+		unit.id,
+		DroneUnit.resource_path,
+	)

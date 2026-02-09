@@ -1,5 +1,7 @@
 extends MarginContainer
 
+class_name ProductionQueue
+
 const ProductionQueueElement = preload("res://source/match/hud/ProductionQueueElement.tscn")
 
 var _production_queue = null
@@ -68,6 +70,7 @@ func _add_queue_element_node(queue_element):
 	var queue_element_node = ProductionQueueElement.instantiate()
 	queue_element_node.queue = _production_queue
 	queue_element_node.queue_element = queue_element
+	queue_element_node.entity_id = _production_queue.get_parent().id
 	_queue_elements.add_child(queue_element_node)
 	_queue_elements.move_child(queue_element_node, 0)
 
@@ -79,7 +82,19 @@ func _on_production_queue_element_enqueued(element):
 func _on_production_queue_element_removed(element):
 	(
 		_queue_elements
-		. get_children()
-		. filter(func(queue_element_node): return queue_element_node.queue_element == element)
-		. map(func(queue_element_node): queue_element_node.queue_free())
+		.get_children()
+		.filter(func(queue_element_node): return queue_element_node.queue_element == element)
+		.map(func(queue_element_node): queue_element_node.queue_free())
 	)
+
+
+static func _generate_unit_production_command(entity_id, unit_type):
+	CommandBus.push_command({
+		"tick": Match.tick + 1,
+		"type": Enums.CommandType.ENTITY_IS_QUEUED,
+		"data": {
+			"entity_id": entity_id,
+			"unit_type": unit_type,
+			"time_total": UnitConstants.PRODUCTION_TIMES[unit_type],
+		}
+	})
