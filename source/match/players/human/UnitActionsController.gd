@@ -78,6 +78,7 @@ func _try_ordering_selected_workers_to_construct_structure(potential_structure):
 			"selected_constructors": selected_constructors.map(func(unit): return unit.id),
 			"structure": structure,
 			"rotation": structure.global_rotation,
+			"position": structure.global_transform.origin,
 		}
 	})
 
@@ -125,6 +126,7 @@ func _navigate_unit_towards_unit(unit, target_unit):
 				"selected_constructors": [unit.id],
 				"structure": target_unit,
 				"rotation": target_unit.global_rotation,
+				"position": structure.global_transform.origin,
 			}
 		})
 		return true
