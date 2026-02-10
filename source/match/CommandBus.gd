@@ -2,6 +2,10 @@ extends Node
 
 var commands := {} # tick -> Array[Command]
 
+func clear():
+	# Clear all stored commands
+	commands.clear()
+
 func push_command(cmd: Dictionary):
 	var t: int = cmd.tick
 	if not commands.has(t):

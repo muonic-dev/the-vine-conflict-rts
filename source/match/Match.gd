@@ -50,6 +50,12 @@ func _ready():
 	visible_player = get_tree().get_nodes_in_group("players")[settings.visible_player]
 	_move_camera_to_initial_position()
 	
+	# Clear command bus for new match
+	CommandBus.clear()
+	
+	# clear ticks
+	tick = 0
+	
 	# required for replays
 	var timer := Timer.new()
 	timer.wait_time = 1.0 / TICK_RATE
@@ -84,46 +90,50 @@ func _execute_command(cmd: Dictionary):
 		Enums.CommandType.MOVE:
 			for entry in cmd.data.targets:
 				var unit: Unit = EntityRegistry.get_unit(entry.unit)
-				if unit == null:
+				if unit == null or not is_instance_valid(unit):
 					continue
 				unit.action = Actions.Moving.new(entry.pos)
 		Enums.CommandType.MOVING_TO_UNIT:
 			for entry in cmd.data.targets:
 				var unit: Unit = EntityRegistry.get_unit(entry)
-				if unit == null:
+				var target_unit = EntityRegistry.get_unit(cmd.data.target_unit)
+				if unit == null or not is_instance_valid(unit) or target_unit == null or not is_instance_valid(target_unit):
 					continue
-				unit.action = Actions.MovingToUnit.new(EntityRegistry.get_unit(cmd.data.target_unit))
+				unit.action = Actions.MovingToUnit.new(target_unit)
 		Enums.CommandType.FOLLOWING:
 			for entry in cmd.data.targets:
 				var unit: Unit = EntityRegistry.get_unit(entry)
-				if unit == null:
+				var target_unit = EntityRegistry.get_unit(cmd.data.target_unit)
+				if unit == null or not is_instance_valid(unit) or target_unit == null or not is_instance_valid(target_unit):
 					continue
-				unit.action = Actions.Following.new(EntityRegistry.get_unit(cmd.data.target_unit))
+				unit.action = Actions.Following.new(target_unit)
 		Enums.CommandType.COLLECTING_RESOURCES_SEQUENTIALLY:
 			for entry in cmd.data.targets:
 				var unit: Unit = EntityRegistry.get_unit(entry)
-				if unit == null:
+				var target_unit = EntityRegistry.get_unit(cmd.data.target_unit)
+				if unit == null or not is_instance_valid(unit) or target_unit == null or not is_instance_valid(target_unit):
 					continue
-				unit.action = Actions.CollectingResourcesSequentially.new(EntityRegistry.get_unit(cmd.data.target_unit))
+				unit.action = Actions.CollectingResourcesSequentially.new(target_unit)
 		Enums.CommandType.AUTO_ATTACKING:
 			for entry in cmd.data.targets:
 				var unit: Unit = EntityRegistry.get_unit(entry)
-				if unit == null:
+				var target_unit = EntityRegistry.get_unit(cmd.data.target_unit)
+				if unit == null or not is_instance_valid(unit) or target_unit == null or not is_instance_valid(target_unit):
 					continue
-				unit.action = Actions.AutoAttacking.new(EntityRegistry.get_unit(cmd.data.target_unit))
+				unit.action = Actions.AutoAttacking.new(target_unit)
 		Enums.CommandType.CONSTRUCTING:
 			var structure = EntityRegistry.get_unit(cmd.data.structure)
-			if structure == null:
+			if structure == null or not is_instance_valid(structure):
 				return
 			for entry in cmd.data.selected_constructors:
 				var unit: Unit = EntityRegistry.get_unit(entry)
-				if unit == null:
+				if unit == null or not is_instance_valid(unit):
 					continue
 				unit.action = Actions.Constructing.new(structure)
 		Enums.CommandType.ENTITY_IS_QUEUED:
 			var structure = EntityRegistry.get_unit(cmd.data.entity_id)
 			print('structure for production command: ', structure, cmd.data.entity_id)
-			if structure == null:
+			if structure == null or not is_instance_valid(structure):
 				return
 			# Load the unit prototype and queue it for production
 			var unit_prototype = load(cmd.data.unit_type)
@@ -135,7 +145,7 @@ func _execute_command(cmd: Dictionary):
 				if p.id == cmd.data.player_id:
 					player = p
 					break
-			if player == null:
+			if player == null or not is_instance_valid(player):
 				return
 			MatchSignals.setup_and_spawn_unit.emit(
 				load(cmd.data.structure_prototype).instantiate(),
@@ -144,7 +154,7 @@ func _execute_command(cmd: Dictionary):
 			)
 		Enums.CommandType.ENTITY_PRODUCTION_CANCELED:
 			var structure = EntityRegistry.get_unit(cmd.data.entity_id)
-			if structure == null:
+			if structure == null or not is_instance_valid(structure):
 				return
 			# Find and cancel the queued element by unit type
 			var unit_prototype = load(cmd.data.unit_type)
